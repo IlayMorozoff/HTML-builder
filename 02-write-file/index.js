@@ -10,16 +10,10 @@ fs.writeFile(path.join(__dirname, 'output.txt'), '', (err) => {
   console.log('Введите какой-нибудь текст');
 });
 
-const readStream = process.stdin;
-
-const writeStream = fs.createWriteStream(path.join(__dirname, 'output.txt'), 'utf-8');
-
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
 });
-
-readStream.pipe(writeStream);
 
 rl.prompt();
 
@@ -37,6 +31,13 @@ rl.on('line', (line) => {
   if (command) {
     command();
   }
+
+  fs.appendFile(path.join(__dirname, 'output.txt'), `${line}\n` , (err) => {
+    if (err) {
+      throw new Error('something went wrong');
+    }
+  });
+
 }).on('close', () => {
   console.log('Спасибо, что были с нами');
   process.exit(0);
