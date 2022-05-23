@@ -7,7 +7,7 @@ async function mergeStyles() {
 
     const filesIntoFolder = await fs.promises.readdir(path.join(__dirname, 'styles'), { withFileTypes: true });
 
-    fs.promises.writeFile(path.join(pathname, 'bundle.css'), '');
+    await fs.promises.writeFile(path.join(pathname, 'bundle.css'), '');
   
     for (let item of filesIntoFolder) {
       if (path.parse(item.name).ext === '.css') {
